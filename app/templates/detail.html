@@ -11,19 +11,26 @@
 
 {% endblock %}
 
-{% block title %}All Movies{% endblock %}
+{% block title %}{{movie.title}}{% endblock %}
 {% include "nav.html" %}
 
 {% block content %}
 
 
 <div class="container">
-    <h1 class="heading">Popular Movies</h1>
-    <div class="card-containter">
-        {% for movie in movies%}
-        <a href="{{url_for('movies.show_one_movie', id=movie.id)}}"><img
-                src="https://image.tmdb.org/t/p/w500{{movie['poster_path']}}" alt="movie_picture" width="250"></a>
-        {% endfor%}
+    <div class="two-column">
+        <div class="left">
+            <img src="https://image.tmdb.org/t/p/w500{{movie['poster_path']}}" alt="movie_picture" width="250">
+        </div>
+        <div class="right">
+            <h1>{{movie.title}}</h1>
+            <p>{{movie.release_date.split("-")[0]}}</p>
+            <p>{{movie.overview}}</p>
+            <iframe class="trailor" src="{{video_path}}" allowfullscreen="" frameborder="0"></iframe>
+            <form action="/">
+                <button>Add to My Movies</button>
+            </form>
+        </div>
     </div>
 
 </div>

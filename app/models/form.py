@@ -12,3 +12,8 @@ class CreateEditForm(FlaskForm):
 class CreateAddForm(FlaskForm):
     title = StringField("Movie Title", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class CreateSearchForm(FlaskForm):
+    title = StringField("Search Movie", validators=[DataRequired()])
+    submit = SubmitField("Search")

@@ -15,8 +15,6 @@
 {% include "nav.html" %}
 
 {% block content %}
-
-
 <div class="container">
     <div class="two-column">
         <div class="left">
@@ -27,9 +25,7 @@
             <p>{{movie.release_date.split("-")[0]}}</p>
             <p>{{movie.overview}}</p>
             <iframe class="trailor" src="{{video_path}}" allowfullscreen="" frameborder="0"></iframe>
-            <form action="/">
-                <button>Add to My Movies</button>
-            </form>
+            <a href="{{url_for('movies.find_movie', id=movie.id)}}">Add to My Movies</a>
         </div>
     </div>
 

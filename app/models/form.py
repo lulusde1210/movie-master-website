@@ -1,19 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 
 class CreateEditForm(FlaskForm):
-    rating = StringField("New Rating", validators=[DataRequired()])
-    review = StringField("Review", validators=[DataRequired()])
+    rating = StringField("Rating", validators=[DataRequired()])
+    review = TextAreaField("Review", validators=[DataRequired()], render_kw={
+                           'class': 'form-control', 'rows': 8})
     submit = SubmitField("Submit")
 
 
 class CreateAddForm(FlaskForm):
     title = StringField("Movie Title", validators=[DataRequired()])
-    submit = SubmitField("Submit")
-
-
-class CreateSearchForm(FlaskForm):
-    title = StringField("Search Movie", validators=[DataRequired()])
     submit = SubmitField("Search")

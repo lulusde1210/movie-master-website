@@ -1,6 +1,6 @@
 from app import db
 from app.models.movie import Movie
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from app.models.form import CreateAddForm, CreateEditForm
 import requests
 import os
@@ -33,7 +33,11 @@ def show_one_movie():
     response = requests.get(info_url)
     movie = response.json()
     video_response = requests.get(video_url)
-    video_id = video_response.json()["results"][-1]["key"]
+    try:
+        video_id = video_response.json()["results"][-1]["key"]
+    except IndexError:
+        video_id = None
+
     video_path = f"https://www.youtube.com/embed/{video_id}"
     return render_template("detail.html", movie=movie, video_path=video_path)
 
@@ -62,8 +66,8 @@ def delete(movie_id):
     return redirect(url_for('movies.show_my_movies'))
 
 
-@movies_bp.route("/add", methods=["GET", "POST"])
-def add_movie():
+@movies_bp.route("/search", methods=["GET", "POST"])
+def search_movie():
     form = CreateAddForm()
     if form.validate_on_submit():
         params = {
@@ -74,7 +78,7 @@ def add_movie():
         movies = response.json()["results"]
         return render_template("select.html", movies=movies)
 
-    return render_template("add.html", form=form)
+    return render_template("search.html", form=form)
 
 
 @movies_bp.route("/find", methods=["GET"])
@@ -96,7 +100,12 @@ def find_movie():
         img_url=img_url,
     )
 
-    db.session.add(new_movie)
-    db.session.commit()
+    try:
+        db.session.add(new_movie)
+        db.session.commit()
+    except:
+        flash(
+            f"{new_movie.title} is already in your movie list, add anther movie!", 'danger')
+        return redirect(url_for("home.show_popular_movies"))
 
     return redirect(url_for("movies.edit", movie_id=new_movie.id))

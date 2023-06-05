@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from app.models.form import CreateAddForm, CreateEditForm
 import requests
 import os
+from sqlalchemy import desc, asc
 
 API_KEY = os.environ.get("TMDB_API")
 movie_search_url = "https://api.themoviedb.org/3/search/movie"
@@ -17,9 +18,9 @@ movies_bp = Blueprint("movies", __name__, url_prefix="/movies")
 
 @movies_bp.route("", methods=["GET"])
 def show_my_movies():
-    all_movies = Movie.query.order_by(Movie.rating).all()
+    all_movies = Movie.query.order_by(desc(Movie.rating)).all()
     for i in range(len(all_movies)):
-        all_movies[i].ranking = len(all_movies) - i
+        all_movies[i].ranking = i+1
     db.session.commit()
     return render_template("show.html", movies=all_movies)
 
@@ -40,30 +41,6 @@ def show_one_movie():
 
     video_path = f"https://www.youtube.com/embed/{video_id}"
     return render_template("detail.html", movie=movie, video_path=video_path)
-
-
-@movies_bp.route("/edit/<movie_id>", methods=["GET", "POST"])
-def edit(movie_id):
-    form = CreateEditForm()
-    movie_id = int(movie_id)
-    movie = Movie.query.get(movie_id)
-
-    if form.validate_on_submit():
-        movie.rating = float(request.form["rating"])
-        movie.review = request.form["review"]
-        db.session.commit()
-        return redirect(url_for('movies.show_my_movies'))
-
-    return render_template('edit.html', form=form)
-
-
-@movies_bp.route("/delete/<movie_id>")
-def delete(movie_id):
-    movie_id = int(movie_id)
-    movie = Movie.query.get(movie_id)
-    db.session.delete(movie)
-    db.session.commit()
-    return redirect(url_for('movies.show_my_movies'))
 
 
 @movies_bp.route("/search", methods=["GET", "POST"])
@@ -106,6 +83,30 @@ def find_movie():
     except:
         flash(
             f"{new_movie.title} is already in your movie list, add anther movie!", 'danger')
-        return redirect(url_for("home.show_popular_movies"))
+        return redirect(url_for("home.show_all_movies"))
 
     return redirect(url_for("movies.edit", movie_id=new_movie.id))
+
+
+@movies_bp.route("/edit/<movie_id>", methods=["GET", "POST"])
+def edit(movie_id):
+    form = CreateEditForm()
+    movie_id = int(movie_id)
+    movie = Movie.query.get(movie_id)
+
+    if form.validate_on_submit():
+        movie.rating = float(request.form["rating"])
+        movie.review = request.form["review"]
+        db.session.commit()
+        return redirect(url_for('movies.show_my_movies'))
+
+    return render_template('edit.html', form=form)
+
+
+@movies_bp.route("/delete/<movie_id>")
+def delete(movie_id):
+    movie_id = int(movie_id)
+    movie = Movie.query.get(movie_id)
+    db.session.delete(movie)
+    db.session.commit()
+    return redirect(url_for('movies.show_my_movies'))

@@ -13,11 +13,11 @@ body {
 	position: relative;
 	color: #AE3139;
 	font-size: 1rem;
-	;
 }
 
 .container {
 	margin-top: 100px;
+
 }
 
 .large {
@@ -62,7 +62,8 @@ p.description {
 }
 
 
-.button {
+.button,
+#submit {
 	cursor: pointer;
 	color: #fff;
 	text-decoration: none;
@@ -100,17 +101,43 @@ p.description {
 
 /* navbar */
 .navbar {
+	padding: 0 30px;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 2;
-	color: #b7afaf;
+	transition: all 0.5s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+	color: #fff;
+}
+
+
+#navbarNavAltMarkup {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .navbar-brand {
-	padding-top: 0.8rem;
-	font-size: 2rem;
+	font-size: 1.7rem;
+	margin-right: 100px;
 }
+
+.nav-scroll {
+	background-color: #0c1b29;
+}
+
+@media screen and (max-width: 1000px) {
+
+	#navbarNavAltMarkup {
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+}
+
 
 /* INDEX HTML */
 
@@ -376,10 +403,21 @@ h1.trending {
 	border: #AE3139 solid 2px;
 }
 
-
-
-/* .flash_container {
+.flash_container {
 	position: absolute;
 	top: 100px;
-	z-index: 2;
-} */
+	z-index: 3;
+}
+
+
+
+.form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#edit-form,
+#search-form {
+	width: 50%;
+}

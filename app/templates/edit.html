@@ -4,10 +4,10 @@
 {% block title %}Edit Movie{% endblock %}
 
 {% block content %}
-<div class="container">
-
-  <h1 class="heading">Your Review</h1>
-  {{ wtf.quick_form(form, novalidate=True) }}
-  {% endblock %}
-
+<div class="form-container">
+  <div id="edit-form">
+    <h1 class="heading">Your Review</h1>
+    {{ wtf.quick_form(form, novalidate=True) }}
+    {% endblock %}
+  </div>
 </div>

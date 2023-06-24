@@ -30,7 +30,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/lusun/Desktop/developer/My Projects/(POSTGRESQL + SQLAlchemy + WTForm)top 10 movies web/venv"
+set -gx VIRTUAL_ENV "/Users/lusun/Desktop/developer/My Projects/(POSTGRESQL + SQLAlchemy + WTForm)Movie Master/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

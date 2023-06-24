@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/lusun/Desktop/developer/My Projects/(POSTGRESQL + SQLAlchemy + WTForm)top 10 movies web/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/lusun/Desktop/developer/My Projects/(POSTGRESQL + SQLAlchemy + WTForm)Movie Master/venv/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

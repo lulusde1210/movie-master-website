@@ -13,7 +13,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    #     "SQLALCHEMY_DATABASE_URI")
+    #     "SQLALCHEMY_DATABASE_URL")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "RENDER_DATABASE_URI")
     app.config['SECRET_KEY'] = os.environ.get(

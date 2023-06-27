@@ -21,5 +21,5 @@ def show_all_movies():
     for i in range(1, 10):
         url = f'https://api.themoviedb.org/3/discover/movie?page={i}&sort_by=popularity.desc'
         response = requests.get(url, params=params)
-        movies.extend(response.json()["results"])
+        movies.extend(response.json())
     return render_template("index.html", movies=movies)
